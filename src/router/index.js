@@ -4,6 +4,7 @@ import admin from '../views/admin.vue'
 import tabel from '../views/tabel.vue'
 import update from '../views/update.vue'
 import landing from '../views/landing.vue'
+import { getUserState } from '../firebase'
 
 
 const router = createRouter({
@@ -12,36 +13,39 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: home
+      component: home,
+      meta: { requiresAuth: true }
     },
     {
       path: '/admin',
       name: 'admin',
-      component: admin
+      component: admin,
+      meta: { requiresUnauth: true }
     },
     {
       path: '/tabel',
       name: 'tabel',
-      component: tabel
+      component: tabel,
+      meta: { requiresUnauth: true }
     },
     {
       path: '/landing',
       name: 'landing',
-      component: landing
+      component: landing,
+      meta: { requiresunAuth: true }
     },
     {
       path: '/update/:id?',
       name: 'update',
-      component: update
-    },
+      component: update,
+      meta: { requiresAuth: true }
+    },    
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    }
+      path: '/login',
+      name: 'update',
+      component: () => import('../views/login.vue'),
+      meta: { requiresAuth: true }
+    },
   ]
 })
 
