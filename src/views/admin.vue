@@ -42,42 +42,75 @@ export default{
                 })
             }
         },
-
+        
         lihatdata(){
             this.$router.push("/tabel")
+        },
+        logout(){
+            let result =  axios.post("http://localhost:4000/logout").then(response=>{
+                // console.log(response.data);
+                if(`${response.data}` == "AKUN TERLOGOUT"){
+                    alert("LOGOUT BERHASIL")
+                    localStorage.setItem("autenticated", false)
+                    this.$router.push("/login")
+                } else{
+                    alert("TERJADI KESALAHAN")
+                }
+            })
+            
         }
     }
 }
 </script>
 <template>
-    <div class="w-full px-40 py-5">
-      <input v-model="email" class="shadow appearance-none border rounded w-full py-6 px-3 mt-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  type="email" placeholder="Email">
-      <p class="font-bold text-white"> Value: {{ email }}</p>
-      <input v-model="password" class="shadow appearance-none border rounded w-full py-6 px-3 mt-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  type="password" placeholder="Password">
-      <p class="font-bold text-white"> Value: {{ password }}</p>
-      <input v-model="value" class="shadow appearance-none border rounded w-full py-6 px-3 mt-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nama" type="text" placeholder="Nama Lengkap">
-      <p class="font-bold text-white"> Value: {{ value }}</p>
-      <input v-model="nomor" class="shadow appearance-none border rounded w-full mt-4 py-6 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nomor" type="text" placeholder="Nomor Rumah">
-      <p class="font-bold text-white"> Value: {{ nomor }}</p>
-      <input v-model="tagihan" class="shadow appearance-none border rounded w-full mt-4 py-6 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="tagihan" type="text" placeholder="Tagihan">
-      <p class="font-bold text-white"> Value: {{ tagihan }}</p>
-      <input v-model="jenis" class="shadow appearance-none border rounded font-bol w-full mt-4 py-6 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="jenis" type="text" placeholder="Jenis Kelamin">
-      <p class="font-bold text-white"> Value: {{ jenis }}</p>
-    </div>
+<div class="container min-w-full mx-auto py-8 items-center bg-slate-200 md:bg-gray-800 flex justify-center">
+    <div data-aos="fade-up" data-aos-delay="500" class="w-full md:w-1/4 items-center bg-slate-200 rounded-2xl md:p-8 p-6">
+        <div>
+            <div class="text-center font-semibold text-black">
+                Ini adalah halaman admin
+            </div>
+            <div class="text-center font-base text-black">
+                Silahkan isi data disini!
+            </div>
+            <div class="flex justify-center">
+                <div class="w-full justify-center">
+                    <span class="px-1 text-sm text-gray-600">Email</span>
+                    <input v-model="email" class="text-sm block px-3 py-2 rounded-lg w-full bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"  type="email" placeholder="Email">
 
-    <div class="grid justify-items-center p-2 ">
-        <button @click="getData" class="bg-white hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-            Tambahkan Data
+                    <span class="px-1 text-sm text-gray-600">Pasword</span>
+                    <input v-model="password" class="text-sm block px-3 py-2 rounded-lg w-full bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"  type="password" placeholder="Password">
+            
+
+                    <span class="px-1 text-sm text-gray-600">Nama Lengkap</span>
+                    <input v-model="value" class="text-sm block px-3 py-2 rounded-lg w-full bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none" id="nama" type="text" placeholder="Nama Lengkap">
+
+                    <span class="px-1 text-sm text-gray-600">Nomor Rumah</span>
+                    <input v-model="nomor" class="text-sm block px-3 py-2 rounded-lg w-full bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none" id="nomor" type="text" placeholder="Nomor Rumah">
+
+                    <span class="px-1 text-sm text-gray-600">Tagihan</span>
+                    <input v-model="tagihan" class="text-sm block px-3 py-2 rounded-lg w-full bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none" id="tagihan" type="text" placeholder="Tagihan">
+                    <span class="px-1 text-sm text-gray-600">Jenis Kelamin</span>
+                    <input v-model="jenis" class="text-sm block px-3 py-2 rounded-lg w-full bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none" id="jenis" type="text" placeholder="Jenis Kelamin">
+                </div>
+            </div>
+        </div>
+        <div class="md:flex justify-center">
+            <div class="grid justify-items-center p-3 ">
+                <button @click="getData" class="bg-gray-700 hover:bg-gray-900 text-white py-2 px-4 rounded inline-flex items-center text-sm font-bold">
+                    Tambahkan Data
+                </button>
+            </div>
+            <div class="grid justify-items-center p-3 ">
+                <button @click="lihatdata" class="bg-red-700 hover:bg-red-900 text-white py-2 px-4 rounded inline-flex items-center text-sm font-bold">
+                    Lihat Data 
+                </button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button @click="logout">
+            LOGOUT DISINI
         </button>
     </div>
-
-    <div class="grid justify-items-center p-2 ">
-        <button @click="lihatdata" class="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded inline-flex items-center">
-            Lihat Data 
-        </button>
-    </div>
-    
+</div>
 </template>
-<style>
-    
-</style>

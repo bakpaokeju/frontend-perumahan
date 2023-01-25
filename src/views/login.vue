@@ -1,5 +1,5 @@
 <script>
-  import AOS from 'aos'
+  import AOS from "aos"
   import 'aos/dist/aos.css'
   AOS.init()
   import axios from 'axios'
@@ -11,20 +11,31 @@
         }
     },
     methods:{
-      getData(){
-        this.$router.push("/admin")
-        // alert("HALOOOOO")
-      },
-      login(){
+      // getData(){
+      //   this.$router.push("/admin")
+      //   // alert("HALOOOOO")
+      // },
+      login (){
             if(this.value.length < 1){
                 alert("Data Tidak Boleh Kosong")
             } else {
                 let result =  axios.post("http://localhost:4000/login",{
                 "nama":this.value,    
                 "alamat":this.nomor,
+                }).then(response =>{
+                  console.log(response.data)
+                  if(`${response.data}` == "ADA KESALAHAN COBA LAGI"){
+                        alert(`${response.data}`)
+                        localStorage.setItem("autenticated", false)
+                        this.$router.push("/login")
+                  } else if (`${response.data}` == "BERHASIL LOGIN") {
+                    // alert(`${response.data}`)
+                    localStorage.setItem("autenticated", true)
+                    this.$router.push("/admin")
+                  }
                 })
-                alert("Anda Telah login")
-                this.$router.push("/landing")
+                // alert("Anda Telah login")
+                // this.$router.push("/admin")
             }
         },
     }
@@ -50,3 +61,9 @@
   </div>
 
 </template>
+
+<style>
+  body{
+    background-color: #1e293b;;
+  }
+</style>'

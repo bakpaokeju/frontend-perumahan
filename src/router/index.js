@@ -4,7 +4,8 @@ import admin from '../views/admin.vue'
 import tabel from '../views/tabel.vue'
 import update from '../views/update.vue'
 import landing from '../views/landing.vue'
-import { getUserState } from '../firebase'
+// import { nextTick } from 'vue'
+// import { getUserState } from '../firebase'
 
 
 const router = createRouter({
@@ -14,39 +15,40 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: home,
-      meta: { requiresAuth: true }
     },
     {
       path: '/admin',
       name: 'admin',
       component: admin,
-      meta: { requiresUnauth: true }
     },
     {
       path: '/tabel',
       name: 'tabel',
       component: tabel,
-      meta: { requiresUnauth: true }
     },
     {
       path: '/landing',
       name: 'landing',
       component: landing,
-      meta: { requiresunAuth: true }
     },
     {
       path: '/update/:id?',
       name: 'update',
       component: update,
-      meta: { requiresAuth: true }
     },    
     {
       path: '/login',
-      name: 'update',
+      name: 'login',
       component: () => import('../views/login.vue'),
-      meta: { requiresAuth: true }
     },
   ]
-})
+}) 
 
+// const isauthen = true;
+router.beforeEach((to,from, next)=>{
+  const isauthen = JSON.parse(localStorage.getItem("autenticated"))
+  if(to.name !== "home" && isauthen == false) next({path:"/"})
+  if(to.name === "login" && isauthen == true) next({path:"/admin"})
+  else next()
+})
 export default router
